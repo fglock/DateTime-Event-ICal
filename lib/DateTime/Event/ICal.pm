@@ -389,7 +389,7 @@ sub _recur_bysetpos {
     # die "invalid bysetpos parameter [@{$args{bysetpos}}]" 
     #     unless @{$args{bysetpos}};
     # print STDERR "bysetpos:  [@{$args{bysetpos}}]\n";
-#   for ( @{$args{bysetpos}} ) { $_-- if $_ > 0 }
+    # for ( @{$args{bysetpos}} ) { $_-- if $_ > 0 }
 
     return DateTime::Set->from_recurrence (
         next =>
@@ -412,7 +412,7 @@ sub _recur_bysetpos {
                     if ( $pos >= 0 ) {
                         my $next = $start->clone;
                         $next->subtract( nanoseconds => 1 );
-                        while ( $pos-- >= 0 ) { 
+                        while ( $pos-- > 0 ) {
                             # print STDERR "    next: $pos ".$next->datetime."\n";
                             $next = $args{recurrence}->next( $next ) 
                         }
@@ -500,7 +500,7 @@ sub _recur_bysetpos {
                     } else { # negative setpos, look from end
                         my $n = $end;
                         while($pc++ < 0) {
-                            my $nn = $it->previous($n);
+                            my $nn = $it->previous;
                             $n = $nn if defined $nn;
                         }
                         return $n if $n < $self;
